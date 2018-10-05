@@ -2,6 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var linkify = require('linkifyjs/html');
+var sanitizeHtml = require('sanitize-html');
 
 var users = [];
 
@@ -25,9 +26,8 @@ io.on('connection', function(socket){
   //Handle chat message from client
   socket.on('chat message', function(msg){
   	var msgRecieved = {message: msg.message,user: msg.user};
-  	linkifiedMessage = linkify(msgRecieved.message); 
+  	linkifiedMessage = sanitizeHtml(linkify(msgRecieved.message), { allowedTags: ['a'] });
   	var msgToSend = "<p>" + msgRecieved.user + " says: " + linkifiedMessage;
-
     io.emit('chat message', msgToSend);
     console.log(msg.user + " says: " + msg.message);
   });

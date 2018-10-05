@@ -8,6 +8,7 @@
   "dependencies": {
     "express": "^4.15.2",
     "linkifyjs": "^2.1.7",
+    "sanitize-html": "^1.19.1",
     "socket.io": "^2.1.1"
   }
 }
